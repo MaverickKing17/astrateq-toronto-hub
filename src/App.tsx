@@ -1152,11 +1152,8 @@ const SavingsCalculator = () => {
 
 const MobileAppShowcase = () => {
   return (
-    <section id="mobile" className="bg-gradient-to-tr from-[#8b5cf6] via-[#ec4899] to-[#fbbf24] overflow-hidden py-24 relative">
-      {/* Overlay to ensure text readability if needed, but we'll try direct contrast first */}
-      <div className="absolute inset-0 bg-white/10 backdrop-blur-[2px]"></div>
-      
-      <div className="container-custom relative z-10">
+    <section id="mobile" className="bg-primary-bg overflow-hidden py-24">
+      <div className="container-custom">
         <div className="grid md:grid-cols-2 gap-16 items-center">
           <div className="relative flex justify-center">
             <motion.div 
@@ -1168,45 +1165,47 @@ const MobileAppShowcase = () => {
               <img 
                 src="https://i.imgur.com/hmLPM0A.png" 
                 alt="ASTRA-AI Mobile App Interface" 
-                className="w-full max-w-[500px] h-auto drop-shadow-[0_20px_50px_rgba(0,0,0,0.3)]"
+                className="w-full max-w-[500px] h-auto drop-shadow-[0_20px_50px_rgba(0,0,0,0.2)]"
                 referrerPolicy="no-referrer"
               />
             </motion.div>
+            {/* Decorative background circle */}
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[120%] h-[120%] bg-glacial-cyan/5 rounded-full blur-[100px] -z-10"></div>
           </div>
 
-          <div className="text-white">
-            <div className="text-[12px] font-bold tracking-[0.1em] text-white uppercase mb-2 opacity-80">MOBILE EXPERIENCE</div>
-            <h2 className="mb-6 text-white">Your Safety Dashboard, Anywhere.</h2>
-            <p className="text-white/80 text-lg mb-10">
+          <div>
+            <div className="text-[12px] font-bold tracking-[0.1em] text-glacial-cyan uppercase mb-2">MOBILE EXPERIENCE</div>
+            <h2 className="mb-6">Your Safety Dashboard, Anywhere.</h2>
+            <p className="text-muted-text text-lg mb-10">
               The ASTRA-AI app provides a real-time window into your vehicle's health and your loved ones' safety. Designed for clarity, speed, and peace of mind.
             </p>
 
             <div className="space-y-8">
               <div className="flex gap-4">
-                <div className="w-12 h-12 rounded-2xl bg-white/20 backdrop-blur-md text-white flex items-center justify-center flex-shrink-0 border border-white/30">
+                <div className="w-12 h-12 rounded-2xl bg-navy text-white flex items-center justify-center flex-shrink-0 border border-white/5">
                   <HeartPulse size={24} />
                 </div>
                 <div>
-                  <h4 className="text-xl font-bold mb-1 text-white">Daily Guardian Report</h4>
-                  <p className="text-white/70">A simplified summary of vehicle status, road risks, and driving performance delivered every morning.</p>
+                  <h4 className="text-xl font-bold mb-1">Daily Guardian Report</h4>
+                  <p className="text-muted-text">A simplified summary of vehicle status, road risks, and driving performance delivered every morning.</p>
                 </div>
               </div>
               <div className="flex gap-4">
-                <div className="w-12 h-12 rounded-2xl bg-white/20 backdrop-blur-md text-white flex items-center justify-center flex-shrink-0 border border-white/30">
+                <div className="w-12 h-12 rounded-2xl bg-navy text-white flex items-center justify-center flex-shrink-0 border border-white/5">
                   <Smartphone size={24} />
                 </div>
                 <div>
-                  <h4 className="text-xl font-bold mb-1 text-white">Predictive Hazard Timeline</h4>
-                  <p className="text-white/70">See upcoming risks on a 3-week timeline, from tire wear to potential engine issues.</p>
+                  <h4 className="text-xl font-bold mb-1">Predictive Hazard Timeline</h4>
+                  <p className="text-muted-text">See upcoming risks on a 3-week timeline, from tire wear to potential engine issues.</p>
                 </div>
               </div>
               <div className="flex gap-4">
-                <div className="w-12 h-12 rounded-2xl bg-white/20 backdrop-blur-md text-white flex items-center justify-center flex-shrink-0 border border-white/30">
+                <div className="w-12 h-12 rounded-2xl bg-navy text-white flex items-center justify-center flex-shrink-0 border border-white/5">
                   <Zap size={24} />
                 </div>
                 <div>
-                  <h4 className="text-xl font-bold mb-1 text-white">GTA Stop-and-Go Mode</h4>
-                  <p className="text-white/70">Specialized AI tuning for Toronto's unique traffic patterns on the QEW, DVP, and 401.</p>
+                  <h4 className="text-xl font-bold mb-1">GTA Stop-and-Go Mode</h4>
+                  <p className="text-muted-text">Specialized AI tuning for Toronto's unique traffic patterns on the QEW, DVP, and 401.</p>
                 </div>
               </div>
             </div>
