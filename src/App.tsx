@@ -3,8 +3,8 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import { useState, useEffect, FormEvent } from 'react';
-import { motion, AnimatePresence } from 'motion/react';
+import { useState, useEffect, FormEvent, useRef, ReactNode } from 'react';
+import { motion, AnimatePresence, useScroll, useTransform } from 'motion/react';
 import { 
   Check, 
   ChevronDown, 
@@ -24,7 +24,19 @@ import {
   Star,
   MessageSquare,
   Send,
-  Bot
+  Bot,
+  ArrowUp,
+  Calculator,
+  Smartphone,
+  Cpu,
+  Facebook,
+  Instagram,
+  Linkedin,
+  Twitter,
+  Youtube,
+  Ghost,
+  Music2,
+  Pin
 } from 'lucide-react';
 
 // --- Types ---
@@ -151,9 +163,37 @@ const Navbar = () => {
 };
 
 const Hero = () => {
+  const containerRef = useRef(null);
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ["start start", "end start"]
+  });
+
+  const yBg1 = useTransform(scrollYProgress, [0, 1], [0, 200]);
+  const yBg2 = useTransform(scrollYProgress, [0, 1], [0, -150]);
+  const yContent = useTransform(scrollYProgress, [0, 1], [0, 50]);
+  const opacity = useTransform(scrollYProgress, [0, 0.8], [1, 0]);
+
   return (
-    <section id="hero" className="min-h-[92vh] flex items-center pt-32 pb-16 bg-primary-bg">
-      <div className="container-custom grid md:grid-cols-[52%_48%] gap-12 items-center">
+    <section id="hero" ref={containerRef} className="min-h-[92vh] flex items-center pt-32 pb-16 bg-primary-bg relative overflow-hidden">
+      {/* Parallax Background Elements */}
+      <motion.div 
+        style={{ y: yBg1 }}
+        className="absolute top-[-10%] left-[-5%] w-[40%] h-[40%] bg-glacial-cyan/5 rounded-full blur-[120px] pointer-events-none"
+      />
+      <motion.div 
+        style={{ y: yBg2 }}
+        className="absolute bottom-[-10%] right-[-5%] w-[50%] h-[50%] bg-safety-ember/5 rounded-full blur-[150px] pointer-events-none"
+      />
+      <motion.div 
+        style={{ y: yBg1, rotate: 45 }}
+        className="absolute top-[20%] right-[15%] w-32 h-32 border border-navy/5 rounded-3xl pointer-events-none"
+      />
+
+      <motion.div 
+        style={{ y: yContent, opacity }}
+        className="container-custom grid md:grid-cols-[52%_48%] gap-12 items-center relative z-10"
+      >
         <motion.div 
           initial={{ opacity: 0, y: 28 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -242,7 +282,7 @@ const Hero = () => {
             Live Guardian Mode interface — Pulse Edition preview. Not final UI.
           </div>
         </motion.div>
-      </div>
+      </motion.div>
     </section>
   );
 };
@@ -986,7 +1026,321 @@ const TechnologyDeepDive = () => {
   );
 };
 
-const Footer = () => {
+const SavingsCalculator = () => {
+  const [km, setKm] = useState(15000);
+  const [year, setYear] = useState(2018);
+  
+  const estimatedSavings = Math.round((km / 100) * 1.5 + (2026 - year) * 100 + 750);
+
+  return (
+    <section id="savings" className="bg-secondary-surface">
+      <div className="container-custom">
+        <div className="text-center mb-16">
+          <div className="text-[12px] font-bold tracking-[0.1em] text-glacial-cyan uppercase mb-2">ROI CALCULATOR</div>
+          <h2>ASTRA-AI Pays for Itself.</h2>
+          <p className="text-muted-text text-lg mt-4 max-w-2xl mx-auto">
+            By preventing major mechanical failures and optimizing your driving patterns, ASTRA-AI saves you thousands over the life of your vehicle.
+          </p>
+        </div>
+
+        <div className="bg-navy rounded-[32px] p-8 md:p-12 text-white shadow-2xl overflow-hidden relative">
+          <div className="absolute top-0 right-0 w-64 h-64 bg-safety-ember/10 rounded-full blur-[100px] -mr-32 -mt-32"></div>
+          
+          <div className="grid md:grid-cols-2 gap-16 items-center relative z-10">
+            <div className="space-y-10">
+              <div>
+                <div className="flex justify-between mb-4">
+                  <label className="text-sm font-bold uppercase tracking-wider text-white/60">Annual KM Driven</label>
+                  <span className="text-safety-ember font-mono font-bold">{km.toLocaleString()} KM</span>
+                </div>
+                <input 
+                  type="range" 
+                  min="5000" 
+                  max="50000" 
+                  step="1000"
+                  value={km}
+                  onChange={(e) => setKm(parseInt(e.target.value))}
+                  className="w-full h-2 bg-white/10 rounded-lg appearance-none cursor-pointer accent-safety-ember"
+                />
+              </div>
+
+              <div>
+                <div className="flex justify-between mb-4">
+                  <label className="text-sm font-bold uppercase tracking-wider text-white/60">Vehicle Year</label>
+                  <span className="text-safety-ember font-mono font-bold">{year}</span>
+                </div>
+                <input 
+                  type="range" 
+                  min="2000" 
+                  max="2026" 
+                  step="1"
+                  value={year}
+                  onChange={(e) => setYear(parseInt(e.target.value))}
+                  className="w-full h-2 bg-white/10 rounded-lg appearance-none cursor-pointer accent-safety-ember"
+                />
+              </div>
+
+              <div className="p-6 bg-white/5 rounded-2xl border border-white/10">
+                <div className="flex items-center gap-3 text-safety-ember mb-2">
+                  <AlertCircle size={18} />
+                  <span className="text-xs font-bold uppercase tracking-widest">Pro Tip</span>
+                </div>
+                <p className="text-sm text-white/60">Vehicles older than 5 years see a <span className="text-white font-bold">2.4x increase</span> in ROI through our preventative maintenance alerts.</p>
+              </div>
+            </div>
+
+            <div className="text-center md:text-left">
+              <div className="inline-flex items-center gap-3 px-4 py-2 bg-glacial-cyan/10 rounded-full text-glacial-cyan text-xs font-bold uppercase tracking-widest mb-6">
+                <Calculator size={14} />
+                Estimated Annual Savings
+              </div>
+              <div className="mb-8">
+                <div className="text-[80px] md:text-[100px] font-sans font-extrabold text-white leading-none tracking-tighter">
+                  ${estimatedSavings.toLocaleString()}<span className="text-safety-ember">+</span>
+                </div>
+                <div className="text-white/40 font-mono text-xl mt-2">CAD PER YEAR</div>
+              </div>
+
+              <div className="grid grid-cols-2 gap-4">
+                <div className="p-4 bg-white/5 rounded-xl border border-white/10">
+                  <div className="text-xs text-white/40 uppercase mb-1">Preventative</div>
+                  <div className="text-lg font-bold text-success-green">+$750/yr</div>
+                </div>
+                <div className="p-4 bg-white/5 rounded-xl border border-white/10">
+                  <div className="text-xs text-white/40 uppercase mb-1">Lifespan</div>
+                  <div className="text-lg font-bold text-glacial-cyan">Significant</div>
+                </div>
+              </div>
+
+              <a href="#waitlist" className="btn-primary w-full mt-8 text-center">
+                Secure Your $329 Pre-Launch Spot
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+};
+
+const MobileAppShowcase = () => {
+  return (
+    <section id="mobile" className="bg-primary-bg overflow-hidden">
+      <div className="container-custom">
+        <div className="grid md:grid-cols-2 gap-16 items-center">
+          <div className="relative">
+            <motion.div 
+              initial={{ opacity: 0, x: -50 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              className="relative z-10"
+            >
+              <img 
+                src="https://picsum.photos/seed/astrateq_app1/600/1200" 
+                alt="ASTRA-AI Mobile App" 
+                className="w-[280px] mx-auto rounded-[3rem] border-[8px] border-navy shadow-2xl"
+                referrerPolicy="no-referrer"
+              />
+            </motion.div>
+            <motion.div 
+              initial={{ opacity: 0, x: 50 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.2 }}
+              className="absolute top-20 -right-4 z-20"
+            >
+              <img 
+                src="https://picsum.photos/seed/astrateq_app2/600/1200" 
+                alt="Guardian Mode Live Feed" 
+                className="w-[240px] rounded-[2.5rem] border-[6px] border-navy shadow-2xl"
+                referrerPolicy="no-referrer"
+              />
+            </motion.div>
+            {/* Decorative background circle */}
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[120%] h-[120%] bg-glacial-cyan/5 rounded-full blur-[100px] -z-10"></div>
+          </div>
+
+          <div>
+            <div className="text-[12px] font-bold tracking-[0.1em] text-glacial-cyan uppercase mb-2">MOBILE EXPERIENCE</div>
+            <h2 className="mb-6">Your Safety Dashboard, Anywhere.</h2>
+            <p className="text-muted-text text-lg mb-10">
+              The ASTRA-AI app provides a real-time window into your vehicle's health and your loved ones' safety. Designed for clarity, speed, and peace of mind.
+            </p>
+
+            <div className="space-y-8">
+              <div className="flex gap-4">
+                <div className="w-12 h-12 rounded-2xl bg-navy text-white flex items-center justify-center flex-shrink-0">
+                  <HeartPulse size={24} />
+                </div>
+                <div>
+                  <h4 className="text-xl font-bold mb-1">Daily Guardian Report</h4>
+                  <p className="text-muted-text">A simplified summary of vehicle status, road risks, and driving performance delivered every morning.</p>
+                </div>
+              </div>
+              <div className="flex gap-4">
+                <div className="w-12 h-12 rounded-2xl bg-navy text-white flex items-center justify-center flex-shrink-0">
+                  <Smartphone size={24} />
+                </div>
+                <div>
+                  <h4 className="text-xl font-bold mb-1">Predictive Hazard Timeline</h4>
+                  <p className="text-muted-text">See upcoming risks on a 3-week timeline, from tire wear to potential engine issues.</p>
+                </div>
+              </div>
+              <div className="flex gap-4">
+                <div className="w-12 h-12 rounded-2xl bg-navy text-white flex items-center justify-center flex-shrink-0">
+                  <Zap size={24} />
+                </div>
+                <div>
+                  <h4 className="text-xl font-bold mb-1">GTA Stop-and-Go Mode</h4>
+                  <p className="text-muted-text">Specialized AI tuning for Toronto's unique traffic patterns on the QEW, DVP, and 401.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+};
+
+const MechanicalIntelligence = () => {
+  return (
+    <section id="mechanical" className="bg-secondary-surface">
+      <div className="container-custom">
+        <div className="grid md:grid-cols-[45%_55%] gap-16 items-center">
+          <div>
+            <div className="text-[12px] font-bold tracking-[0.1em] text-safety-ember uppercase mb-2">MECHANICAL INTELLIGENCE</div>
+            <h2 className="mb-6">Suspension & Brake Wear Prediction.</h2>
+            <p className="text-muted-text text-lg mb-8">
+              ASTRA-AI doesn't just read error codes. It listens to the "digital shadow" of your car's mechanical components to predict failure before it happens.
+            </p>
+            
+            <div className="p-8 bg-navy rounded-3xl text-white relative overflow-hidden">
+              <div className="absolute top-0 right-0 p-4">
+                <Cpu className="text-safety-ember animate-pulse" size={32} />
+              </div>
+              <div className="text-4xl font-sans font-extrabold text-safety-ember mb-2">81%</div>
+              <div className="text-xs font-bold uppercase tracking-widest text-white/40 mb-4">System Health Target</div>
+              <p className="text-sm text-white/60 leading-relaxed">
+                Our proprietary "Fire Code" algorithms analyze vibration and pressure data to estimate remaining life for bushings, bearings, and pads with unprecedented precision.
+              </p>
+            </div>
+          </div>
+
+          <div className="relative">
+            <motion.div 
+              initial={{ opacity: 0, scale: 0.9 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true }}
+              className="rounded-[2rem] overflow-hidden shadow-2xl border border-navy/10"
+            >
+              <img 
+                src="https://picsum.photos/seed/astrateq_mechanical/1000/800" 
+                alt="Mechanical Deep Dive" 
+                className="w-full h-auto"
+                referrerPolicy="no-referrer"
+              />
+            </motion.div>
+            {/* Floating data points */}
+            <div className="absolute -top-6 -left-6 bg-white p-4 rounded-xl shadow-xl border border-navy/5">
+              <div className="text-[10px] font-bold text-muted-text uppercase mb-1">Bushing Wear</div>
+              <div className="text-xl font-bold text-safety-ember">63% Remaining</div>
+            </div>
+            <div className="absolute -bottom-6 -right-6 bg-white p-4 rounded-xl shadow-xl border border-navy/5">
+              <div className="text-[10px] font-bold text-muted-text uppercase mb-1">Brake Pad Life</div>
+              <div className="text-xl font-bold text-success-green">22 Days Predicted</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+};
+
+const ScrollToTop = () => {
+  const [isVisible, setIsVisible] = useState(false);
+
+  useEffect(() => {
+    const toggleVisibility = () => {
+      if (window.pageYOffset > 500) {
+        setIsVisible(true);
+      } else {
+        setIsVisible(false);
+      }
+    };
+    window.addEventListener('scroll', toggleVisibility);
+    return () => window.removeEventListener('scroll', toggleVisibility);
+  }, []);
+
+  const scrollToTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    });
+  };
+
+  return (
+    <AnimatePresence>
+      {isVisible && (
+        <motion.button
+          initial={{ opacity: 0, scale: 0.5, y: 20 }}
+          animate={{ opacity: 1, scale: 1, y: 0 }}
+          exit={{ opacity: 0, scale: 0.5, y: 20 }}
+          onClick={scrollToTop}
+          className="fixed bottom-24 right-6 z-[90] w-12 h-12 rounded-full bg-safety-ember text-navy flex items-center justify-center shadow-lg hover:bg-[#E6A600] transition-all hover:-translate-y-1 border-2 border-white/20"
+          aria-label="Back to top"
+        >
+          <ArrowUp size={24} />
+        </motion.button>
+      )}
+    </AnimatePresence>
+  );
+};
+
+const Modal = ({ isOpen, onClose, title, children }: { isOpen: boolean, onClose: () => void, title: string, children: ReactNode }) => {
+  if (!isOpen) return null;
+  return (
+    <AnimatePresence>
+      <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 md:p-8">
+        <motion.div 
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          onClick={onClose}
+          className="absolute inset-0 bg-navy/80 backdrop-blur-sm"
+        />
+        <motion.div 
+          initial={{ opacity: 0, scale: 0.95, y: 20 }}
+          animate={{ opacity: 1, scale: 1, y: 0 }}
+          exit={{ opacity: 0, scale: 0.95, y: 20 }}
+          className="relative w-full max-w-3xl max-h-[80vh] bg-white rounded-[32px] shadow-2xl overflow-hidden flex flex-col"
+        >
+          <div className="p-6 border-b border-navy/5 flex justify-between items-center bg-secondary-surface">
+            <h3 className="text-2xl font-bold text-navy">{title}</h3>
+            <button onClick={onClose} className="p-2 hover:bg-navy/5 rounded-full transition-colors">
+              <X size={24} className="text-navy" />
+            </button>
+          </div>
+          <div className="p-8 overflow-y-auto custom-scrollbar text-body-text leading-relaxed">
+            {children}
+          </div>
+        </motion.div>
+      </div>
+    </AnimatePresence>
+  );
+};
+
+const Footer = ({ onOpenPage }: { onOpenPage: (page: string) => void }) => {
+  const socialIcons = [
+    { name: 'Facebook', icon: Facebook, color: '#1877F2' },
+    { name: 'Instagram', icon: Instagram, color: '#E4405F' },
+    { name: 'LinkedIn', icon: Linkedin, color: '#0A66C2' },
+    { name: 'X (Twitter)', icon: Twitter, color: '#000000' },
+    { name: 'TikTok', icon: Music2, color: '#000000' },
+    { name: 'Snapchat', icon: Ghost, color: '#FFFC00' },
+    { name: 'Pinterest', icon: Pin, color: '#BD081C' }
+  ];
+
   return (
     <footer className="bg-navy py-16 text-white border-t border-white/5">
       <div className="container-custom">
@@ -1004,10 +1358,15 @@ const Footer = () => {
             <p className="text-white/50 text-sm leading-relaxed mb-8">
               Empowering Canadian families with predictive AI safety technology. Built in Toronto, engineered for the world.
             </p>
-            <div className="flex gap-4">
-              {['LinkedIn', 'Instagram', 'X/Twitter'].map(social => (
-                <a key={social} href="#" className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-safety-ember hover:text-navy transition-all duration-300 border border-white/10" aria-label={social}>
-                  <Globe size={18} />
+            <div className="flex flex-wrap gap-3">
+              {socialIcons.map(social => (
+                <a 
+                  key={social.name} 
+                  href="#" 
+                  className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-white/10 transition-all duration-300 border border-white/10 group" 
+                  aria-label={social.name}
+                >
+                  <social.icon size={18} className="group-hover:scale-110 transition-transform" />
                 </a>
               ))}
             </div>
@@ -1017,19 +1376,19 @@ const Footer = () => {
             <div>
               <h4 className="text-white font-bold mb-6 text-sm uppercase tracking-widest">Company</h4>
               <ul className="space-y-4 text-white/50 text-sm">
-                <li><a href="#" className="hover:text-safety-ember transition-colors">About Astrateq</a></li>
-                <li><a href="#technology" className="hover:text-safety-ember transition-colors">Our Technology</a></li>
-                <li><a href="#industry" className="hover:text-safety-ember transition-colors">Canadian Industry</a></li>
-                <li><a href="#" className="hover:text-safety-ember transition-colors">Careers</a></li>
+                <li><button onClick={() => onOpenPage('About Astrateq')} className="hover:text-safety-ember transition-colors text-left">About Astrateq</button></li>
+                <li><button onClick={() => onOpenPage('Our Technology')} className="hover:text-safety-ember transition-colors text-left">Our Technology</button></li>
+                <li><button onClick={() => onOpenPage('Canadian Industry')} className="hover:text-safety-ember transition-colors text-left">Canadian Industry</button></li>
+                <li><button onClick={() => onOpenPage('Careers')} className="hover:text-safety-ember transition-colors text-left">Careers</button></li>
               </ul>
             </div>
             <div>
               <h4 className="text-white font-bold mb-6 text-sm uppercase tracking-widest">Resources</h4>
               <ul className="space-y-4 text-white/50 text-sm">
-                <li><a href="#" className="hover:text-safety-ember transition-colors">Privacy Policy</a></li>
-                <li><a href="#" className="hover:text-safety-ember transition-colors">Terms of Service</a></li>
-                <li><a href="#" className="hover:text-safety-ember transition-colors">Contact Support</a></li>
-                <li><a href="#" className="hover:text-safety-ember transition-colors">Transport Canada Notice</a></li>
+                <li><button onClick={() => onOpenPage('Privacy Policy')} className="hover:text-safety-ember transition-colors text-left">Privacy Policy</button></li>
+                <li><button onClick={() => onOpenPage('Terms of Service')} className="hover:text-safety-ember transition-colors text-left">Terms of Service</button></li>
+                <li><button onClick={() => onOpenPage('Contact Support')} className="hover:text-safety-ember transition-colors text-left">Contact Support</button></li>
+                <li><button onClick={() => onOpenPage('Transport Canada Notice')} className="hover:text-safety-ember transition-colors text-left">Transport Canada Notice</button></li>
               </ul>
             </div>
           </div>
@@ -1187,6 +1546,149 @@ const ChatWidget = () => {
 };
 
 export default function App() {
+  const [activePage, setActivePage] = useState<string | null>(null);
+
+  const pageContent: Record<string, ReactNode> = {
+    'About Astrateq': (
+      <div className="space-y-6">
+        <p className="text-lg font-medium text-navy">Founded in Toronto, Astrateq is at the forefront of the AI-powered automotive safety revolution in Canada.</p>
+        <p>Our mission is simple: to provide families with the same level of safety assurance that professional fleet operators enjoy. We believe that every driver, especially our seniors, deserves a proactive guardian on the road.</p>
+        <div className="grid md:grid-cols-2 gap-6 mt-8">
+          <div className="p-6 bg-secondary-surface rounded-2xl">
+            <h4 className="font-bold text-navy mb-2">Our Vision</h4>
+            <p className="text-sm">A world where road accidents are predicted and prevented before they occur, starting with the most vulnerable drivers.</p>
+          </div>
+          <div className="p-6 bg-secondary-surface rounded-2xl">
+            <h4 className="font-bold text-navy mb-2">Our Roots</h4>
+            <p className="text-sm">Engineered in the heart of Toronto's tech hub, our algorithms are trained on the unique challenges of Canadian roads.</p>
+          </div>
+        </div>
+      </div>
+    ),
+    'Our Technology': (
+      <div className="space-y-6">
+        <h4 className="text-xl font-bold text-navy">The ASTRA-AI Engine</h4>
+        <p>Our technology leverages high-frequency OBD-II data combined with advanced neural road mapping to create a "digital shadow" of your vehicle's performance.</p>
+        <ul className="list-disc pl-6 space-y-3">
+          <li><strong>Neural Road Mapping:</strong> Real-time analysis of terrain, traffic density, and weather conditions.</li>
+          <li><strong>Mechanical Variance Detection:</strong> Identifying subtle changes in brake pressure and suspension vibration.</li>
+          <li><strong>Edge Computing:</strong> All critical safety processing happens locally on the device for zero-latency alerts.</li>
+        </ul>
+        <div className="mt-6 p-6 bg-navy text-white rounded-2xl">
+          <p className="text-sm italic">"We aren't just reading error codes; we're predicting the future state of the machine." — Astrateq Engineering Team</p>
+        </div>
+      </div>
+    ),
+    'Canadian Industry': (
+      <div className="space-y-6">
+        <h4 className="text-xl font-bold text-navy">Leading the North</h4>
+        <p>Canada presents unique challenges for automotive AI, from extreme temperature fluctuations to complex urban stop-and-go traffic.</p>
+        <div className="space-y-4">
+          <div className="flex gap-4 items-start">
+            <div className="w-8 h-8 rounded-full bg-glacial-cyan/10 text-glacial-cyan flex items-center justify-center flex-shrink-0">1</div>
+            <p><strong>Harsh Climate Engineering:</strong> Our sensors and algorithms are tested in -40°C conditions to ensure reliability in Canadian winters.</p>
+          </div>
+          <div className="flex gap-4 items-start">
+            <div className="w-8 h-8 rounded-full bg-glacial-cyan/10 text-glacial-cyan flex items-center justify-center flex-shrink-0">2</div>
+            <p><strong>GTA Traffic Optimization:</strong> Specialized tuning for the 401, QEW, and DVP corridors.</p>
+          </div>
+          <div className="flex gap-4 items-start">
+            <div className="w-8 h-8 rounded-full bg-glacial-cyan/10 text-glacial-cyan flex items-center justify-center flex-shrink-0">3</div>
+            <p><strong>Data Sovereignty:</strong> All user data is stored on Canadian soil, adhering to the strictest national standards.</p>
+          </div>
+        </div>
+      </div>
+    ),
+    'Careers': (
+      <div className="space-y-6 text-center py-8">
+        <h4 className="text-2xl font-bold text-navy">Join the Safety Revolution</h4>
+        <p className="text-muted-text">We're looking for brilliant minds to help us redefine road safety in Canada.</p>
+        <div className="grid gap-4 max-w-md mx-auto mt-8">
+          <div className="p-4 border border-navy/10 rounded-xl hover:border-safety-ember transition-colors cursor-pointer">
+            <div className="font-bold">Senior AI Engineer</div>
+            <div className="text-sm text-muted-text">Toronto, ON · Full-time</div>
+          </div>
+          <div className="p-4 border border-navy/10 rounded-xl hover:border-safety-ember transition-colors cursor-pointer">
+            <div className="font-bold">Embedded Systems Specialist</div>
+            <div className="text-sm text-muted-text">Toronto, ON · Full-time</div>
+          </div>
+          <div className="p-4 border border-navy/10 rounded-xl hover:border-safety-ember transition-colors cursor-pointer">
+            <div className="font-bold">Customer Success Lead</div>
+            <div className="text-sm text-muted-text">Remote (Canada) · Full-time</div>
+          </div>
+        </div>
+        <p className="text-sm mt-8">Send your resume to <span className="text-navy font-bold">careers@astrateq.com</span></p>
+      </div>
+    ),
+    'Privacy Policy': (
+      <div className="space-y-6">
+        <h4 className="text-xl font-bold text-navy">Your Data, Your Control.</h4>
+        <p>At Astrateq, privacy isn't a feature—it's a fundamental right. We adhere to PIPEDA (Personal Information Protection and Electronic Documents Act) and go beyond standard requirements.</p>
+        <div className="space-y-4 bg-secondary-surface p-6 rounded-2xl">
+          <p><strong>1. Data Sovereignty:</strong> Your driving data never leaves Canada. We use local servers to ensure national jurisdiction.</p>
+          <p><strong>2. End-to-End Encryption:</strong> All communication between the OBD-II device and your app is secured with military-grade encryption.</p>
+          <p><strong>3. No Data Selling:</strong> We never sell your personal or driving data to third parties, including insurance companies, without your explicit consent.</p>
+        </div>
+      </div>
+    ),
+    'Terms of Service': (
+      <div className="space-y-6">
+        <h4 className="text-xl font-bold text-navy">Usage Guidelines</h4>
+        <p>By using ASTRA-AI, you agree to our terms of service. Key points include:</p>
+        <ul className="list-disc pl-6 space-y-3">
+          <li><strong>Assistive Technology:</strong> ASTRA-AI is an assistive tool and does not replace the need for an attentive, licensed driver.</li>
+          <li><strong>Subscription:</strong> Access to Guardian Mode requires an active subscription after the initial pre-launch period.</li>
+          <li><strong>Liability:</strong> Astrateq is not liable for accidents or mechanical failures; the driver remains responsible for vehicle operation.</li>
+        </ul>
+      </div>
+    ),
+    'Contact Support': (
+      <div className="space-y-8 text-center py-4">
+        <div className="grid md:grid-cols-3 gap-6">
+          <div className="p-6 bg-secondary-surface rounded-2xl">
+            <div className="w-10 h-10 bg-navy text-white rounded-full flex items-center justify-center mx-auto mb-4">
+              <Send size={20} />
+            </div>
+            <h5 className="font-bold mb-1">Email</h5>
+            <p className="text-sm">support@astrateq.com</p>
+          </div>
+          <div className="p-6 bg-secondary-surface rounded-2xl">
+            <div className="w-10 h-10 bg-navy text-white rounded-full flex items-center justify-center mx-auto mb-4">
+              <Smartphone size={20} />
+            </div>
+            <h5 className="font-bold mb-1">Phone</h5>
+            <p className="text-sm">+1 (800) ASTRA-AI</p>
+          </div>
+          <div className="p-6 bg-secondary-surface rounded-2xl">
+            <div className="w-10 h-10 bg-navy text-white rounded-full flex items-center justify-center mx-auto mb-4">
+              <Globe size={20} />
+            </div>
+            <h5 className="font-bold mb-1">Office</h5>
+            <p className="text-sm">Toronto, ON</p>
+          </div>
+        </div>
+        <div className="max-w-md mx-auto">
+          <h5 className="font-bold mb-4">Send us a message</h5>
+          <form className="space-y-4">
+            <input type="text" placeholder="Your Name" className="w-full p-3 rounded-xl border border-navy/10 focus:outline-none focus:border-safety-ember" />
+            <textarea placeholder="How can we help?" rows={4} className="w-full p-3 rounded-xl border border-navy/10 focus:outline-none focus:border-safety-ember"></textarea>
+            <button type="button" className="btn-primary w-full">Send Message</button>
+          </form>
+        </div>
+      </div>
+    ),
+    'Transport Canada Notice': (
+      <div className="space-y-6">
+        <h4 className="text-xl font-bold text-navy">Regulatory Compliance</h4>
+        <p>Astrateq works closely with regulatory bodies to ensure our technology meets and exceeds Canadian safety standards.</p>
+        <div className="p-6 border-l-4 border-safety-ember bg-safety-ember/5">
+          <p className="text-sm font-medium">"ASTRA-AI is designed to complement existing vehicle safety systems and adheres to the guidelines set forth for aftermarket driver assistance technologies."</p>
+        </div>
+        <p>We are committed to the continuous improvement of road safety in Canada and participate in national dialogues regarding AI ethics and automotive regulation.</p>
+      </div>
+    )
+  };
+
   return (
     <div className="selection:bg-safety-ember selection:text-navy">
       <Navbar />
@@ -1196,7 +1698,10 @@ export default function App() {
         <ProblemSection />
         <GuardianModeSection />
         <TechnologyDeepDive />
+        <MechanicalIntelligence />
         <HowItWorks />
+        <SavingsCalculator />
+        <MobileAppShowcase />
         <CanadianSafetyIndustry />
         <Products />
         <TrustBadges />
@@ -1204,8 +1709,17 @@ export default function App() {
         <WaitlistForm />
         <FAQ />
       </main>
-      <Footer />
+      <Footer onOpenPage={setActivePage} />
       <ChatWidget />
+      <ScrollToTop />
+
+      <Modal 
+        isOpen={!!activePage} 
+        onClose={() => setActivePage(null)} 
+        title={activePage || ''}
+      >
+        {activePage && pageContent[activePage]}
+      </Modal>
 
       {/* Structured Data */}
       <script type="application/ld+json">
