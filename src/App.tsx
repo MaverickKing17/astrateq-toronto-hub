@@ -21,10 +21,18 @@ import {
   Lock,
   Globe,
   Zap,
-  Star
+  Star,
+  MessageSquare,
+  Send,
+  Bot
 } from 'lucide-react';
 
 // --- Types ---
+interface Message {
+  role: 'user' | 'assistant';
+  content: string;
+}
+
 interface FAQItem {
   question: string;
   answer: string;
@@ -69,9 +77,14 @@ const Navbar = () => {
     }`}>
       <div className="container-custom flex justify-between items-center">
         <div className="flex items-center">
-          <a href="#" className="font-serif text-[22px] text-navy flex items-center">
-            ASTRATEQ
-            <span className="w-2 h-2 bg-safety-ember rounded-full ml-[3px] inline-block"></span>
+          <a href="#" className="flex items-center gap-2">
+            <img 
+              src="https://i.ibb.co/C3DynZTj/Astrateq-removebg-preview.png" 
+              alt="ASTRATEQ Logo" 
+              className="h-10 w-auto"
+              referrerPolicy="no-referrer"
+            />
+            <span className="font-sans font-bold text-[22px] text-navy tracking-tight">ASTRATEQ</span>
           </a>
         </div>
 
@@ -380,7 +393,7 @@ const GuardianModeSection = () => {
           viewport={{ once: true }}
           className="bg-navy rounded-[20px] p-10 text-white"
         >
-          <div className="font-serif text-[80px] text-safety-ember leading-none mb-2">94%</div>
+          <div className="font-sans font-extrabold text-[80px] text-safety-ember leading-none mb-2">94%</div>
           <div className="text-sm text-white/55 uppercase tracking-wider mb-6">predictive accuracy target</div>
           
           <div className="w-full h-[1px] bg-white/10 my-6"></div>
@@ -432,7 +445,7 @@ const HowItWorks = () => {
         <div className="grid md:grid-cols-4 gap-6">
           {steps.map((step, idx) => (
             <div key={idx} className="bg-secondary-surface rounded-2xl p-7 border border-navy/5 text-center relative">
-              <span className="font-serif text-[72px] text-navy/5 block leading-none relative">
+              <span className="font-sans font-extrabold text-[72px] text-navy/5 block leading-none relative">
                 {idx + 1}
               </span>
               <h4 className="text-lg font-semibold text-navy -mt-6 relative z-10 mb-3">{step.title}</h4>
@@ -511,7 +524,7 @@ const Products = () => {
               </div>
               <h3 className="text-xl font-bold mb-4">{p.name}</h3>
               <div className="mb-6">
-                <span className="font-serif text-[56px] text-navy block leading-none">{p.price}</span>
+                <span className="font-sans font-extrabold text-[56px] text-navy block leading-none">{p.price}</span>
                 <span className="text-[13px] text-muted-text">CAD · Pre-launch target</span>
               </div>
               
@@ -603,7 +616,7 @@ const Testimonials = () => {
               <div className="flex gap-1 mb-4">
                 {[...Array(5)].map((_, i) => <Star key={i} size={18} fill="#FFB800" className="text-safety-ember" />)}
               </div>
-              <p className="font-serif italic text-xl text-navy leading-[1.6] mb-6">"{r.quote}"</p>
+              <p className="font-sans font-medium italic text-xl text-navy leading-[1.6] mb-6">"{r.quote}"</p>
               <div>
                 <div className="text-[15px] font-semibold text-navy">{r.name}</div>
                 <div className="text-[13px] text-muted-text">{r.sub}</div>
@@ -773,7 +786,7 @@ const WaitlistForm = () => {
               <div className="w-12 h-12 bg-success-green/10 text-success-green rounded-full flex items-center justify-center mx-auto mb-6">
                 <Check size={28} />
               </div>
-              <h3 className="font-serif text-[28px] text-navy mb-4">You're on the list. Welcome.</h3>
+              <h3 className="font-sans font-bold text-[28px] text-navy mb-4">You're on the list. Welcome.</h3>
               <p className="text-muted-text leading-[1.8]">
                 Your Canadian Winter Safety Guide is on its way to your inbox. We'll be in touch before public launch with your pre-launch pricing.
               </p>
@@ -855,44 +868,321 @@ const FAQ = () => {
   );
 };
 
-const Footer = () => {
+const CanadianSafetyIndustry = () => {
+  const insights = [
+    {
+      title: "Transport Canada Alignment",
+      body: "Our systems are designed to exceed the safety guidelines set by Transport Canada for connected and automated vehicles. We actively participate in the Canadian automotive safety dialogue to ensure our AI models are tuned for local infrastructure."
+    },
+    {
+      title: "Harsh Climate Engineering",
+      body: "Canada's climate is unique. From the humidity of the Maritimes to the extreme cold of the Prairies, ASTRA-AI is stress-tested to maintain 94% predictive accuracy even when sensors are challenged by ice and salt."
+    },
+    {
+      title: "Data Sovereignty",
+      body: "Unlike international competitors, Astrateq keeps all Canadian driver data on Canadian soil. Our PIPEDA-compliant infrastructure ensures that your family's privacy is protected by Canadian law, always."
+    }
+  ];
+
   return (
-    <footer className="bg-navy py-12 text-white">
-      <div className="container-custom">
-        <div className="flex flex-wrap justify-between items-center gap-6 mb-8">
-          <div className="flex items-center">
-            <a href="#" className="font-serif text-[22px] text-primary-bg flex items-center">
-              ASTRATEQ
-              <span className="w-2 h-2 bg-safety-ember rounded-full ml-[3px] inline-block"></span>
-            </a>
+    <section id="industry" className="bg-navy text-white overflow-hidden relative">
+      <div className="absolute top-0 right-0 w-1/2 h-full bg-glacial-cyan/5 -skew-x-12 translate-x-1/4 pointer-events-none"></div>
+      <div className="container-custom relative z-10">
+        <div className="grid md:grid-cols-[40%_60%] gap-16 items-center">
+          <div>
+            <div className="text-[12px] font-bold tracking-[0.1em] text-safety-ember uppercase mb-4">CANADIAN LEADERSHIP</div>
+            <h2 className="text-white mb-6">Pioneering AI Safety for the Great White North.</h2>
+            <p className="text-white/70 text-lg leading-relaxed mb-8">
+              Astrateq is more than just a gadget company. We are a Canadian AI research hub dedicated to reducing road fatalities across the provinces.
+            </p>
+            <div className="flex items-center gap-4 p-6 bg-white/5 rounded-2xl border border-white/10">
+              <div className="text-3xl">🇨🇦</div>
+              <div className="text-sm text-white/80">Proudly headquartered in Toronto, Ontario. Supporting local tech talent and safer roads for all Canadians.</div>
+            </div>
           </div>
-
-          <div className="flex flex-wrap gap-6 text-[14px] text-white/50">
-            <a href="#" className="hover:text-white/90 transition-colors">Privacy Policy</a>
-            <span className="hidden md:inline">|</span>
-            <a href="#" className="hover:text-white/90 transition-colors">Terms of Service</a>
-            <span className="hidden md:inline">|</span>
-            <a href="#" className="hover:text-white/90 transition-colors">Contact</a>
-            <span className="hidden md:inline">|</span>
-            <a href="#" className="hover:text-white/90 transition-colors">Transport Canada Notice</a>
-          </div>
-
-          <div className="flex gap-4">
-            {['LinkedIn', 'Instagram', 'X/Twitter'].map(social => (
-              <a key={social} href="#" className="text-white/40 hover:text-white/90 transition-colors text-sm" aria-label={social}>
-                {social}
-              </a>
+          <div className="grid gap-6">
+            {insights.map((item, idx) => (
+              <motion.div 
+                key={idx}
+                initial={{ opacity: 0, x: 20 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: idx * 0.1 }}
+                className="p-8 bg-white/5 rounded-2xl border border-white/10 hover:bg-white/10 transition-colors"
+              >
+                <h3 className="text-xl text-safety-ember mb-3">{item.title}</h3>
+                <p className="text-white/60 leading-relaxed">{item.body}</p>
+              </motion.div>
             ))}
           </div>
         </div>
+      </div>
+    </section>
+  );
+};
 
-        <div className="pt-8 border-t border-white/8 text-center">
-          <div className="text-[11px] text-white/30 leading-[1.9] max-w-[800px] mx-auto">
-            Astrateq Gadgets Inc. — Toronto, Ontario, Canada. ASTRA-AI is an assistive safety technology. Results are not guaranteed and do not represent a warranty of any kind. Does not replace attentive driving or driver responsibility. All prices in CAD and represent pre-launch targets only. PIPEDA compliant.
+const TechnologyDeepDive = () => {
+  return (
+    <section id="technology" className="bg-primary-bg">
+      <div className="container-custom">
+        <div className="max-w-3xl mx-auto text-center mb-16">
+          <div className="text-[12px] font-bold tracking-[0.1em] text-glacial-cyan uppercase mb-2">THE CORE TECH</div>
+          <h2>Predictive Intelligence, not just Reactive Sensors.</h2>
+          <p className="text-muted-text text-lg mt-4">
+            Most modern cars have ADAS (Advanced Driver Assistance Systems). ASTRA-AI goes further by using deep learning to predict risks before they manifest.
+          </p>
+        </div>
+
+        <div className="grid md:grid-cols-2 gap-12">
+          <div className="space-y-8">
+            <div className="group">
+              <div className="flex items-center gap-4 mb-4">
+                <div className="w-10 h-10 rounded-lg bg-navy text-white flex items-center justify-center font-bold">01</div>
+                <h3 className="text-2xl">Neural Road Mapping</h3>
+              </div>
+              <p className="text-muted-text pl-14">
+                Our AI analyzes historical accident data from Canadian municipalities to identify "High-Risk Zones" based on current weather and time of day.
+              </p>
+            </div>
+            <div className="group">
+              <div className="flex items-center gap-4 mb-4">
+                <div className="w-10 h-10 rounded-lg bg-navy text-white flex items-center justify-center font-bold">02</div>
+                <h3 className="text-2xl">Mechanical Variance Detection</h3>
+              </div>
+              <p className="text-muted-text pl-14">
+                By monitoring the OBD-II data stream, we detect micro-variations in brake pressure or engine timing that suggest a failure is 3-6 weeks away.
+              </p>
+            </div>
+          </div>
+          <div className="relative">
+            <div className="aspect-video bg-navy rounded-3xl overflow-hidden shadow-2xl relative group">
+              <div className="absolute inset-0 bg-gradient-to-br from-glacial-cyan/20 to-transparent"></div>
+              <div className="absolute inset-0 flex items-center justify-center">
+                <div className="text-center">
+                  <div className="w-16 h-16 rounded-full bg-safety-ember flex items-center justify-center mx-auto mb-4 animate-pulse">
+                    <Zap size={32} className="text-navy" />
+                  </div>
+                  <div className="text-white font-bold tracking-widest uppercase text-xs">AI Engine Active</div>
+                </div>
+              </div>
+              {/* Decorative elements */}
+              <div className="absolute bottom-4 left-4 right-4 h-1 bg-white/10 rounded-full overflow-hidden">
+                <motion.div 
+                  initial={{ width: "0%" }}
+                  animate={{ width: "100%" }}
+                  transition={{ duration: 3, repeat: Infinity, ease: "linear" }}
+                  className="h-full bg-safety-ember"
+                />
+              </div>
+            </div>
+            <div className="absolute -bottom-6 -right-6 bg-white p-6 rounded-2xl shadow-xl border border-navy/5 max-w-[240px]">
+              <div className="text-navy font-bold text-sm mb-1">Real-time Processing</div>
+              <div className="text-muted-text text-xs leading-relaxed">Edge computing ensures alerts are delivered in <span className="text-success-green font-bold">0.04s</span>.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+};
+
+const Footer = () => {
+  return (
+    <footer className="bg-navy py-16 text-white border-t border-white/5">
+      <div className="container-custom">
+        <div className="grid md:grid-cols-[30%_50%_20%] gap-12 mb-16">
+          <div>
+            <a href="#" className="flex items-center gap-2 mb-6">
+              <img 
+                src="https://i.ibb.co/C3DynZTj/Astrateq-removebg-preview.png" 
+                alt="ASTRATEQ Logo" 
+                className="h-12 w-auto brightness-0 invert"
+                referrerPolicy="no-referrer"
+              />
+              <span className="font-sans font-bold text-[24px] text-white tracking-tight">ASTRATEQ</span>
+            </a>
+            <p className="text-white/50 text-sm leading-relaxed mb-8">
+              Empowering Canadian families with predictive AI safety technology. Built in Toronto, engineered for the world.
+            </p>
+            <div className="flex gap-4">
+              {['LinkedIn', 'Instagram', 'X/Twitter'].map(social => (
+                <a key={social} href="#" className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-safety-ember hover:text-navy transition-all duration-300 border border-white/10" aria-label={social}>
+                  <Globe size={18} />
+                </a>
+              ))}
+            </div>
+          </div>
+
+          <div className="grid grid-cols-2 gap-8">
+            <div>
+              <h4 className="text-white font-bold mb-6 text-sm uppercase tracking-widest">Company</h4>
+              <ul className="space-y-4 text-white/50 text-sm">
+                <li><a href="#" className="hover:text-safety-ember transition-colors">About Astrateq</a></li>
+                <li><a href="#technology" className="hover:text-safety-ember transition-colors">Our Technology</a></li>
+                <li><a href="#industry" className="hover:text-safety-ember transition-colors">Canadian Industry</a></li>
+                <li><a href="#" className="hover:text-safety-ember transition-colors">Careers</a></li>
+              </ul>
+            </div>
+            <div>
+              <h4 className="text-white font-bold mb-6 text-sm uppercase tracking-widest">Resources</h4>
+              <ul className="space-y-4 text-white/50 text-sm">
+                <li><a href="#" className="hover:text-safety-ember transition-colors">Privacy Policy</a></li>
+                <li><a href="#" className="hover:text-safety-ember transition-colors">Terms of Service</a></li>
+                <li><a href="#" className="hover:text-safety-ember transition-colors">Contact Support</a></li>
+                <li><a href="#" className="hover:text-safety-ember transition-colors">Transport Canada Notice</a></li>
+              </ul>
+            </div>
+          </div>
+
+          <div>
+            <h4 className="text-white font-bold mb-6 text-sm uppercase tracking-widest">Headquarters</h4>
+            <div className="text-white/50 text-sm leading-relaxed">
+              123 Tech Way, Suite 500<br />
+              Toronto, ON M5V 2T6<br />
+              Canada
+            </div>
+            <div className="mt-6 p-4 bg-white/5 rounded-xl border border-white/10 text-[11px] text-white/40">
+              PIPEDA Compliant<br />
+              Data Sovereignty Guaranteed
+            </div>
+          </div>
+        </div>
+
+        <div className="pt-8 border-t border-white/8 flex flex-col md:flex-row justify-between items-center gap-4">
+          <div className="text-[11px] text-white/30 leading-[1.9] max-w-[600px] text-center md:text-left">
+            © 2026 Astrateq Gadgets Inc. All rights reserved. ASTRA-AI is an assistive safety technology. Does not replace attentive driving. All prices in CAD.
+          </div>
+          <div className="flex items-center gap-2">
+            <div className="w-2 h-2 bg-success-green rounded-full animate-pulse"></div>
+            <span className="text-[10px] text-white/40 uppercase tracking-widest">Systems Nominal · Canada East</span>
           </div>
         </div>
       </div>
     </footer>
+  );
+};
+
+const ChatWidget = () => {
+  const [isOpen, setIsOpen] = useState(false);
+  const [messages, setMessages] = useState<Message[]>([
+    { role: 'assistant', content: "Hi! I'm Astrateq Sentinel. How can I help you protect your loved ones today?" }
+  ]);
+  const [input, setInput] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
+
+  const handleSend = async (e: FormEvent) => {
+    e.preventDefault();
+    if (!input.trim() || isLoading) return;
+
+    const userMessage: Message = { role: 'user', content: input };
+    setMessages(prev => [...prev, userMessage]);
+    setInput('');
+    setIsLoading(true);
+
+    try {
+      const response = await fetch('/api/chat', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ messages: [...messages, userMessage] })
+      });
+
+      const data = await response.json();
+      if (data.message) {
+        setMessages(prev => [...prev, { role: 'assistant', content: data.message }]);
+      } else if (data.error) {
+        setMessages(prev => [...prev, { role: 'assistant', content: "I'm sorry, I'm having trouble connecting right now. Please try again later." }]);
+      }
+    } catch (error) {
+      setMessages(prev => [...prev, { role: 'assistant', content: "Connection error. Please check your internet and try again." }]);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  return (
+    <div className="fixed bottom-6 right-6 z-[100]">
+      <AnimatePresence>
+        {isOpen && (
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9, y: 20 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            exit={{ opacity: 0, scale: 0.9, y: 20 }}
+            className="bg-primary-bg border border-navy/10 rounded-2xl shadow-2xl w-[350px] sm:w-[400px] h-[500px] flex flex-col overflow-hidden mb-4"
+          >
+            {/* Header */}
+            <div className="bg-navy p-4 flex justify-between items-center">
+              <div className="flex items-center gap-3">
+                <div className="w-8 h-8 rounded-full bg-safety-ember flex items-center justify-center">
+                  <Bot size={18} className="text-navy" />
+                </div>
+                <div>
+                  <div className="text-white font-bold text-sm">Astrateq Sentinel</div>
+                  <div className="text-white/50 text-[10px] flex items-center gap-1">
+                    <span className="w-1.5 h-1.5 bg-success-green rounded-full"></span>
+                    Online
+                  </div>
+                </div>
+              </div>
+              <button onClick={() => setIsOpen(false)} className="text-white/50 hover:text-white">
+                <X size={20} />
+              </button>
+            </div>
+
+            {/* Messages */}
+            <div className="flex-grow overflow-y-auto p-4 space-y-4 bg-secondary-surface/30">
+              {messages.map((msg, idx) => (
+                <div key={idx} className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
+                  <div className={`max-w-[80%] p-3 rounded-2xl text-sm ${
+                    msg.role === 'user' 
+                      ? 'bg-navy text-white rounded-tr-none' 
+                      : 'bg-white text-body-text border border-navy/5 rounded-tl-none'
+                  }`}>
+                    {msg.content}
+                  </div>
+                </div>
+              ))}
+              {isLoading && (
+                <div className="flex justify-start">
+                  <div className="bg-white text-body-text border border-navy/5 p-3 rounded-2xl rounded-tl-none text-sm">
+                    <span className="flex gap-1">
+                      <span className="w-1.5 h-1.5 bg-muted-text rounded-full animate-bounce"></span>
+                      <span className="w-1.5 h-1.5 bg-muted-text rounded-full animate-bounce [animation-delay:0.2s]"></span>
+                      <span className="w-1.5 h-1.5 bg-muted-text rounded-full animate-bounce [animation-delay:0.4s]"></span>
+                    </span>
+                  </div>
+                </div>
+              )}
+            </div>
+
+            {/* Input */}
+            <form onSubmit={handleSend} className="p-4 bg-white border-t border-navy/5 flex gap-2">
+              <input
+                type="text"
+                value={input}
+                onChange={(e) => setInput(e.target.value)}
+                placeholder="Type your message..."
+                className="flex-grow text-sm focus:outline-none"
+              />
+              <button 
+                type="submit" 
+                disabled={isLoading || !input.trim()}
+                className="text-navy disabled:opacity-30 hover:text-glacial-cyan transition-colors"
+              >
+                <Send size={20} />
+              </button>
+            </form>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      <button
+        onClick={() => setIsOpen(!isOpen)}
+        className="w-14 h-14 rounded-full bg-safety-ember text-navy flex items-center justify-center shadow-[0_0_20px_rgba(255,184,0,0.4)] hover:bg-[#E6A600] transition-all hover:scale-110 border-2 border-white/20"
+        aria-label="Open AI Chat"
+      >
+        {isOpen ? <X size={24} /> : <MessageSquare size={24} />}
+      </button>
+    </div>
   );
 };
 
@@ -905,7 +1195,9 @@ export default function App() {
         <StatsBand />
         <ProblemSection />
         <GuardianModeSection />
+        <TechnologyDeepDive />
         <HowItWorks />
+        <CanadianSafetyIndustry />
         <Products />
         <TrustBadges />
         <Testimonials />
@@ -913,6 +1205,7 @@ export default function App() {
         <FAQ />
       </main>
       <Footer />
+      <ChatWidget />
 
       {/* Structured Data */}
       <script type="application/ld+json">
