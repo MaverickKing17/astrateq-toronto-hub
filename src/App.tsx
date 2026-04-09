@@ -170,118 +170,91 @@ const Hero = () => {
   });
 
   const yBg1 = useTransform(scrollYProgress, [0, 1], [0, 200]);
-  const yBg2 = useTransform(scrollYProgress, [0, 1], [0, -150]);
   const yContent = useTransform(scrollYProgress, [0, 1], [0, 50]);
   const opacity = useTransform(scrollYProgress, [0, 0.8], [1, 0]);
 
   return (
-    <section id="hero" ref={containerRef} className="min-h-[92vh] flex items-center pt-32 pb-16 bg-primary-bg relative overflow-hidden">
-      {/* Parallax Background Elements */}
-      <motion.div 
-        style={{ y: yBg1 }}
-        className="absolute top-[-10%] left-[-5%] w-[40%] h-[40%] bg-glacial-cyan/5 rounded-full blur-[120px] pointer-events-none"
-      />
-      <motion.div 
-        style={{ y: yBg2 }}
-        className="absolute bottom-[-10%] right-[-5%] w-[50%] h-[50%] bg-safety-ember/5 rounded-full blur-[150px] pointer-events-none"
-      />
-      <motion.div 
-        style={{ y: yBg1, rotate: 45 }}
-        className="absolute top-[20%] right-[15%] w-32 h-32 border border-navy/5 rounded-3xl pointer-events-none"
-      />
+    <section id="hero" ref={containerRef} className="min-h-screen flex items-center pt-20 pb-16 bg-[#0F1923] relative overflow-hidden">
+      {/* Background Image with Overlay */}
+      <div className="absolute inset-0 z-0">
+        <img 
+          src="https://i.imgur.com/jsZ5IBW.jpeg" 
+          alt="Hero Background" 
+          className="w-full h-full object-cover opacity-85"
+          referrerPolicy="no-referrer"
+        />
+        <div className="absolute inset-0 bg-gradient-to-r from-[#0F1923] via-[#0F1923]/60 to-transparent"></div>
+      </div>
 
       <motion.div 
         style={{ y: yContent, opacity }}
-        className="container-custom grid md:grid-cols-[52%_48%] gap-12 items-center relative z-10"
+        className="container-custom relative z-10"
       >
-        <motion.div 
-          initial={{ opacity: 0, y: 28 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-12%" }}
-          transition={{ duration: 0.55, ease: "easeOut" }}
-        >
-          <div className="inline-block bg-secondary-surface border border-navy/12 rounded-[20px] px-4 py-[6px] mb-5">
-            <span className="text-[13px] font-medium text-navy">🇨🇦 Engineered for Canadian Roads</span>
-          </div>
-          <h1>If you can't be in the passenger seat, be in the loop.</h1>
-          <p className="text-lg text-muted-text mt-5 max-w-[480px]">
-            ASTRA-AI gives your parents a proactive safety co-pilot — and gives you the peace of mind of knowing they're protected on every drive.
-          </p>
-          
-          <div className="flex flex-wrap gap-[10px] mt-6">
-            {['5-minute OBD-II setup', 'Targeting 94% predictive accuracy', 'PIPEDA compliant — data stays in Canada'].map((chip) => (
-              <div key={chip} className="inline-flex items-center gap-2 bg-secondary-surface border border-navy/10 rounded-[20px] px-4 py-[7px] text-[13px] text-body-text">
-                <Check size={14} className="text-success-green" />
-                {chip}
-              </div>
-            ))}
-          </div>
-
-          <div className="mt-8 flex flex-col gap-4">
-            <a href="#waitlist" className="btn-primary">
-              Join the Family Safety Waitlist
-            </a>
-            <a href="#guardian-mode" className="btn-ghost">
-              See How Guardian Mode Works ↓
-            </a>
-          </div>
-
-          <div className="mt-5 text-[13px] text-muted-text">
-            ★★★★★ Trusted by families across Ontario
-          </div>
-        </motion.div>
-
-        <motion.div 
-          initial={{ opacity: 0, y: 28 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-12%" }}
-          transition={{ duration: 0.55, ease: "easeOut", delay: 0.1 }}
-          className="card-warm relative"
-        >
-          <div className="flex justify-between items-center mb-5">
-            <span className="text-[11px] font-bold uppercase tracking-[0.1em] text-muted-text">GUARDIAN MODE</span>
-            <div className="bg-[#E8F5E9] text-success-green text-[12px] rounded-[20px] px-3 py-[5px] flex items-center gap-[6px]">
-              <span className="w-2 h-2 bg-success-green rounded-full animate-pulse-dot"></span>
-              ACTIVE
-            </div>
-          </div>
-
-          <div className="space-y-0">
-            <div className="py-[14px] border-b border-navy/5">
-              <div className="text-[11px] font-bold uppercase tracking-[0.08em] text-muted-text">ROAD RISK SCORE</div>
-              <div className="flex items-baseline gap-2">
-                <span className="font-mono text-[22px] font-medium text-success-green">12 / 100</span>
-                <span className="text-[12px] text-muted-text">LOW — all conditions nominal</span>
-              </div>
-            </div>
-            <div className="py-[14px] border-b border-navy/5">
-              <div className="text-[11px] font-bold uppercase tracking-[0.08em] text-muted-text">NEXT SERVICE FLAG</div>
-              <div className="flex items-baseline gap-2">
-                <span className="font-mono text-[22px] font-medium text-safety-ember">41 days</span>
-                <span className="text-[12px] text-muted-text">Brake fluid pressure variance detected early</span>
-              </div>
-            </div>
-            <div className="py-[14px]">
-              <div className="text-[11px] font-bold uppercase tracking-[0.08em] text-muted-text">FAMILY VIEW</div>
-              <div className="flex items-baseline gap-2">
-                <span className="font-mono text-[22px] font-medium text-glacial-cyan">Connected</span>
-                <span className="text-[12px] text-muted-text">1 caregiver — read-only access enabled</span>
-              </div>
-            </div>
-          </div>
-
-          <div className="mt-5 pt-4 border-top border-navy/5 flex gap-2">
-            {['OBD-II Connected', 'AI Monitoring', 'Canada Data'].map((pill) => (
-              <span key={pill} className="text-[11px] bg-navy text-primary-bg rounded-[20px] px-3 py-1">
-                {pill}
+        <div className="max-w-[650px]">
+          <motion.div 
+            initial={{ opacity: 0, y: 28 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+          >
+            <div className="inline-block bg-white/10 backdrop-blur-md border border-white/20 rounded-full px-4 py-1.5 mb-8">
+              <span className="text-[13px] font-semibold text-white tracking-wide flex items-center gap-2">
+                <span className="w-2 h-2 bg-glacial-cyan rounded-full animate-pulse"></span>
+                Engineered for Canadian Roads
               </span>
-            ))}
-          </div>
+            </div>
+            
+            <h1 className="text-white text-5xl md:text-7xl font-bold leading-[1.05] tracking-tight mb-8">
+              If you can't be in the passenger seat, <span className="text-glacial-cyan">be in the loop.</span>
+            </h1>
+            
+            <p className="text-xl text-white/70 mb-10 leading-relaxed max-w-[540px]">
+              ASTRA-AI gives your parents a proactive safety co-pilot — and gives you the peace of mind of knowing they're protected on every drive.
+            </p>
+            
+            <div className="flex flex-wrap gap-3 mb-12">
+              {['5-minute OBD-II setup', '94% Predictive Accuracy', 'PIPEDA Compliant'].map((chip) => (
+                <div key={chip} className="inline-flex items-center gap-2 bg-white/5 backdrop-blur-sm border border-white/10 rounded-full px-5 py-2 text-[14px] text-white/80">
+                  <Check size={16} className="text-glacial-cyan" />
+                  {chip}
+                </div>
+              ))}
+            </div>
 
-          <div className="text-center text-[12px] text-muted-text mt-3">
-            Live Guardian Mode interface — Pulse Edition preview. Not final UI.
-          </div>
-        </motion.div>
+            <div className="flex flex-col sm:flex-row gap-5">
+              <a href="#waitlist" className="bg-safety-ember text-navy font-bold px-10 py-5 rounded-xl transition-all duration-300 hover:scale-[1.02] hover:shadow-[0_0_30px_rgba(255,184,0,0.3)] text-center text-lg">
+                Join the Family Safety Waitlist
+              </a>
+              <a href="#guardian-mode" className="bg-white/10 backdrop-blur-md text-white font-semibold px-10 py-5 rounded-xl border border-white/20 transition-all duration-300 hover:bg-white/20 text-center text-lg">
+                See How It Works
+              </a>
+            </div>
+
+            <div className="mt-10 flex items-center gap-4">
+              <div className="flex -space-x-3">
+                {[1, 2, 3, 4].map(i => (
+                  <div key={i} className="w-10 h-10 rounded-full border-2 border-[#0F1923] bg-gray-800 overflow-hidden">
+                    <img src={`https://i.pravatar.cc/100?u=${i}`} alt="User" />
+                  </div>
+                ))}
+              </div>
+              <div className="text-sm text-white/50">
+                <span className="text-white font-bold">500+</span> families in Ontario already joined
+              </div>
+            </div>
+          </motion.div>
+        </div>
+      </motion.div>
+      
+      {/* Scroll Indicator */}
+      <motion.div 
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 1, duration: 1 }}
+        className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-white/30"
+      >
+        <span className="text-[10px] uppercase tracking-[0.2em] font-bold">Scroll to explore</span>
+        <div className="w-[1px] h-12 bg-gradient-to-b from-white/30 to-transparent"></div>
       </motion.div>
     </section>
   );
