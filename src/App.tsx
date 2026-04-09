@@ -1163,7 +1163,7 @@ const MobileAppShowcase = () => {
               className="relative z-10"
             >
               <img 
-                src="https://i.imgur.com/hmLPM0A.png" 
+                src="https://i.imgur.com/dAuJK7p.jpeg" 
                 alt="ASTRA-AI Mobile App Interface" 
                 className="w-full max-w-[500px] h-auto drop-shadow-[0_20px_50px_rgba(0,0,0,0.2)]"
                 referrerPolicy="no-referrer"
