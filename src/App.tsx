@@ -304,7 +304,7 @@ const SocialProof = () => {
             <img 
               src="https://i.imgur.com/W9mlQZW.png" 
               alt="Social Proof and Partners" 
-              className="w-full h-auto grayscale opacity-60 hover:grayscale-0 hover:opacity-100 transition-all duration-500"
+              className="w-full h-auto drop-shadow-md"
               referrerPolicy="no-referrer"
             />
           </motion.div>
