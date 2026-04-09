@@ -1128,31 +1128,17 @@ const MobileAppShowcase = () => {
     <section id="mobile" className="bg-primary-bg overflow-hidden">
       <div className="container-custom">
         <div className="grid md:grid-cols-2 gap-16 items-center">
-          <div className="relative">
+          <div className="relative flex justify-center">
             <motion.div 
-              initial={{ opacity: 0, x: -50 }}
-              whileInView={{ opacity: 1, x: 0 }}
+              initial={{ opacity: 0, scale: 0.9 }}
+              whileInView={{ opacity: 1, scale: 1 }}
               viewport={{ once: true }}
               className="relative z-10"
             >
               <img 
-                src="https://picsum.photos/seed/astrateq_app1/600/1200" 
-                alt="ASTRA-AI Mobile App" 
-                className="w-[280px] mx-auto rounded-[3rem] border-[8px] border-navy shadow-2xl"
-                referrerPolicy="no-referrer"
-              />
-            </motion.div>
-            <motion.div 
-              initial={{ opacity: 0, x: 50 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.2 }}
-              className="absolute top-20 -right-4 z-20"
-            >
-              <img 
-                src="https://picsum.photos/seed/astrateq_app2/600/1200" 
-                alt="Guardian Mode Live Feed" 
-                className="w-[240px] rounded-[2.5rem] border-[6px] border-navy shadow-2xl"
+                src="https://i.imgur.com/hmLPM0A.png" 
+                alt="ASTRA-AI Mobile App Interface" 
+                className="w-full max-w-[500px] h-auto"
                 referrerPolicy="no-referrer"
               />
             </motion.div>
