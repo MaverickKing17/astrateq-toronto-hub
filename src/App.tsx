@@ -1221,7 +1221,7 @@ const MechanicalIntelligence = () => {
               className="rounded-[2rem] overflow-hidden shadow-2xl border border-navy/10"
             >
               <img 
-                src="https://picsum.photos/seed/astrateq_mechanical/1000/800" 
+                src="https://i.imgur.com/ErW6b11.jpeg" 
                 alt="Mechanical Deep Dive" 
                 className="w-full h-auto"
                 referrerPolicy="no-referrer"
